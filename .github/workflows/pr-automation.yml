@@ -1,0 +1,38 @@
+name: Pull Request Automation
+
+on:
+  pull_request:
+    types: [opened, edited]
+
+jobs:
+  validate-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate PR description
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            
+            if (!pr.body || pr.body.trim().length < 10) {
+              core.warning('PR description is empty or too short');
+            } else {
+              console.log('✓ PR description is valid');
+              console.log(`PR #${pr.number}: ${pr.title}`);
+            }
+
+  notify-reviewers:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Log PR info
+        run: |
+          echo "✓ Pull request opened: ${{ github.event.pull_request.title }}"
+          echo "✓ Number: ${{ github.event.pull_request.number }}"
+          echo "✓ Author: ${{ github.event.pull_request.user.login }}"
