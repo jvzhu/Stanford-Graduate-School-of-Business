@@ -1,0 +1,57 @@
+name: Project Board Automation
+
+on:
+  issues:
+    types: [closed, reopened]
+  schedule:
+    - cron: '0 0 * * 0'
+
+jobs:
+  manage-project:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+    steps:
+      - name: Process issue status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            if (context.payload.action === 'closed') {
+              const issue = context.payload.issue;
+              console.log(`✓ Issue #${issue.number} closed - ready for Done column`);
+            } else if (context.payload.action === 'reopened') {
+              const issue = context.payload.issue;
+              console.log(`✓ Issue #${issue.number} reopened - move to In Progress`);
+            }
+
+  stale-check:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Check for stale issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open'
+            });
+            
+            const now = new Date();
+            let staleCount = 0;
+            
+            issues.data.forEach(issue => {
+              const updated = new Date(issue.updated_at);
+              const daysOld = (now - updated) / (1000 * 60 * 60 * 24);
+              if (daysOld > 60) {
+                staleCount++;
+                console.log(`⚠️ Stale issue: #${issue.number} (${Math.floor(daysOld)} days old)`);
+              }
+            });
+            
+            console.log(`✓ Found ${staleCount} stale issues`);
