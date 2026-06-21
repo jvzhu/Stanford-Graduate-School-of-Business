@@ -1,0 +1,49 @@
+name: Issue Auto-Management
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  auto-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Label issues by title
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.toLowerCase();
+            let labels = [];
+            
+            if (title.includes('[bug]') || title.includes('bug')) {
+              labels.push('bug');
+            }
+            if (title.includes('[feature]') || title.includes('feature')) {
+              labels.push('enhancement');
+            }
+            if (title.includes('[data]') || title.includes('data collection')) {
+              labels.push('data collection');
+            }
+            
+            if (labels.length > 0) {
+              github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: labels
+              });
+              console.log(`✓ Added labels: ${labels.join(', ')}`);
+            }
+
+  add-to-project:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: read
+    steps:
+      - name: Issue notification
+        run: |
+          echo "✓ Issue created and ready for project board"
+          echo "Add manually via project settings if needed"
