@@ -1,0 +1,50 @@
+name: Data Collection Validation
+
+on:
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'sources.md'
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate data metadata
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const body = pr.body || '';
+            
+            const requiredFields = [
+              'Data Source',
+              'Collection Method',
+              'Citation'
+            ];
+            
+            let missingFields = [];
+            requiredFields.forEach(field => {
+              if (!body.includes(field)) {
+                missingFields.push(field);
+              }
+            });
+            
+            if (missingFields.length > 0) {
+              core.warning(`Missing required fields: ${missingFields.join(', ')}`);
+              
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pr.number,
+                body: `⚠️ Data collection PR requires:\n${missingFields.map(f => `- [ ] ${f}`).join('\n')}`
+              });
+              console.log(`❌ Missing: ${missingFields.join(', ')}`);
+            } else {
+              console.log('✓ All required data fields present');
+            }
