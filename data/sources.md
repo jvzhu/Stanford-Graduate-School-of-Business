@@ -15,7 +15,7 @@ For each source, record the following fields:
 - **Year** — publication or last-updated year
 - **URL/DOI** — persistent link or digital object identifier
 - **Access** — open, registration required, subscription, or restricted
-- **License/Usage terms** — license name or summary of usage restrictions
+- **License/Usage Terms** — license name or summary of usage restrictions
 - **Data link** — direct link to raw data, if available
 - **Quality/Coverage notes** — initial assessment of data quality and coverage
 
