@@ -24,6 +24,7 @@ This repository contains research, case studies, teaching materials, and documen
 .
 ├── README.md
 ├── data/
+│   ├── analysis.md
 │   └── sources.md
 ├── docs/
 └── CONTRIBUTING.md
@@ -31,6 +32,7 @@ This repository contains research, case studies, teaching materials, and documen
 
 ## Current Tasks
 - [Collect data from sources](https://github.com/jvzhu/Stanford-Graduate-School-of-Business/issues/1)
+- [Analyze and categorize collected data](https://github.com/jvzhu/Stanford-Graduate-School-of-Business/issues/2) — see [data/analysis.md](data/analysis.md)
 
 ## Contributing
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.

@@ -4,6 +4,8 @@ This document tracks candidate and confirmed data sources for the project, inclu
 
 Related issue: [Collect data from sources (#1)](https://github.com/jvzhu/Stanford-Graduate-School-of-Business/issues/1)
 
+For a categorized analysis of these sources (coverage, quality, and gaps), see [`analysis.md`](analysis.md).
+
 ## How to Add a Source
 
 For each source, record the following fields:
