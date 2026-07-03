@@ -61,7 +61,7 @@ Related issue: [Analyze and categorize collected data (#2)](https://github.com/j
 
 ## Consolidated Gap List
 
-1. **No primary datasets downloaded yet** — the Primary Datasets table in `sources.md` is empty; the open government sources (SEC EDGAR, FRED, Census, BLS, World Bank) are the recommended starting point since they are freely redistributable.
+1. **No primary datasets downloaded yet** — the Primary Datasets table in `sources.md` currently contains only the `_None yet_` placeholder row; the open government sources (SEC EDGAR, FRED, Census, BLS, World Bank) are the recommended starting point since they are freely redistributable.
 2. **Subscription access unconfirmed** — WRDS/CRSP/Compustat, JSTOR, and NBER follow-ups remain open, blocking firm-level financial data and full-text article retrieval.
 3. **U.S.-centric skew** — apart from World Bank Open Data, open sources cover primarily U.S. data; international firm and market coverage depends on the restricted subset.
 4. **No structured research datasets from the bibliographic categories** — repositories and scholarly databases yield documents and citations, not analysis-ready data; replication datasets must be tracked down paper by paper.
